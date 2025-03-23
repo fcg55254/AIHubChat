@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI聊天聚合平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-gradient"></div>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+    </div>
+
+    <header>
+        <div class="logo">AI聚合平台</div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#" id="my-agents-link">我的智能体</a></li>
+                <li><a href="#" id="settings-link">设置</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>一站式AI聊天体验</h1>
+            <p>同时与多个AI助手对话，创建自定义智能体，提升您的AI使用效率</p>
+        </section>
+
+        <section class="chat-container">
+            <div class="ai-selection">
+                <h2>选择AI助手</h2>
+                <div class="ai-list">
+                    <div class="ai-item">
+                        <input type="checkbox" id="claude" class="ai-checkbox" data-ai="claude">
+                        <label for="claude">Claude</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="grok" class="ai-checkbox" data-ai="grok">
+                        <label for="grok">Grok</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="gemini" class="ai-checkbox" data-ai="gemini">
+                        <label for="gemini">Gemini</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="perplexity" class="ai-checkbox" data-ai="perplexity">
+                        <label for="perplexity">Perplexity</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="poe" class="ai-checkbox" data-ai="poe">
+                        <label for="poe">Poe</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="chatgpt" class="ai-checkbox" data-ai="chatgpt">
+                        <label for="chatgpt">ChatGPT</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="genspark" class="ai-checkbox" data-ai="genspark">
+                        <label for="genspark">GenSpark</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="doubao" class="ai-checkbox" data-ai="doubao">
+                        <label for="doubao">豆包</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="kimi" class="ai-checkbox" data-ai="kimi">
+                        <label for="kimi">Kimi</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="wenxiaobai" class="ai-checkbox" data-ai="wenxiaobai">
+                        <label for="wenxiaobai">问小白</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="copilot" class="ai-checkbox" data-ai="copilot">
+                        <label for="copilot">GitHub Copilot</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="wenxin" class="ai-checkbox" data-ai="wenxin">
+                        <label for="wenxin">文心一言</label>
+                    </div>
+                    <div class="ai-item">
+                        <input type="checkbox" id="qianwen" class="ai-checkbox" data-ai="qianwen">
+                        <label for="qianwen">通义千问</label>
+                    </div>
+                </div>
+                <div class="selection-actions">
+                    <button id="select-all">全选</button>
+                    <button id="deselect-all">取消全选</button>
+                </div>
+            </div>
+
+            <div class="chat-interface">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="welcome-message">
+                        <h2>欢迎使用AI聚合平台</h2>
+                        <p>请在左侧选择一个或多个AI助手开始对话</p>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <textarea id="chat-input" placeholder="输入您的问题..." rows="3"></textarea>
+                    <button id="send-button"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal" id="agent-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>创建智能体</h2>
+                <form id="agent-form">
+                    <div class="form-group">
+                        <label for="agent-name">智能体名称</label>
+                        <input type="text" id="agent-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="agent-description">描述</label>
+                        <textarea id="agent-description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>选择AI模型</label>
+                        <div class="agent-ai-selection">
+                            <!-- 动态生成AI选择列表 -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="agent-prompt">系统提示词</label>
+                        <textarea id="agent-prompt" rows="5" placeholder="输入指导AI行为的系统提示词..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">保存智能体</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="settings-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>设置</h2>
+                <form id="settings-form">
+                    <div class="form-group">
+                        <label>主题</label>
+                        <select id="theme-selector">
+                            <option value="light">浅色</option>
+                            <option value="dark">深色</option>
+                            <option value="system">跟随系统</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>聊天窗口行为</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="new-tab-chat" checked>
+                            <label for="new-tab-chat">在新标签页打开聊天</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-button">保存设置</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="my-agents-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>我的智能体</h2>
+                <div class="agents-list" id="agents-list">
+                    <!-- 动态生成智能体列表 -->
+                </div>
+                <button id="create-agent-button" class="submit-button">创建新智能体</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 AI聚合平台 | <a href="#">关于我们</a> | <a href="#">使用条款</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
